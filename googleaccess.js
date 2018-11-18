@@ -155,7 +155,7 @@ var startGoogleAccess = function(config) {
         console.log("googleaccess: gapi.client.init() ...");
         gapi.client.init({
           clientId: config.gapi_client_id,
-          scope: "profile email https://www.googleapis.com/auth/drive",
+          scope: "https://www.googleapis.com/auth/drive",
           discoveryDocs: [
             "https://www.googleapis.com/discovery/v1/apis/drive/v3/rest",
           ],
