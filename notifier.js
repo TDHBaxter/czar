@@ -57,7 +57,7 @@ var startNotifier = function(channel) {
     }
 
     // Audio (applause, etc) for solved puzzles.
-    if (solved && window.Audio) {
+    if (solved && window.Audio && document.getElementById("playSoundsCheck").checked) {
       var applause = new window.Audio("/sounds/applause.mp3");
       if (tags.split(",").indexOf("meta") < 0) {
         applause.play();

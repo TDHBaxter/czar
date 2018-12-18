@@ -1,4 +1,5 @@
 *.state
 *.pyc
 .*.swp
+nohup.out
 *~

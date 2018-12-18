@@ -6,6 +6,8 @@
 // TODOs
 // x Selector should look okay when there's lots of tags.
 
+var filter_values = ["\u2610","\u2611","\u2612"]
+
 var SanitizeTagList = function(str) {
   // Sanitize and sort the list of tags the user gave us.
 
@@ -41,23 +43,18 @@ var GetSelectedTags = function() {
   // TagsMatch.
 
   var selected = {};
-  selected.tags = {};
-  selected.num = 0;
-  selected.invert = document.getElementById('invert').checked;
+  selected.intags = {};
+  selected.extags = {};
+  selected.innum = 0;
 
   // What tags are selected?
   for (var i = 0; i < gTags.length; i++) {
-    if (document.getElementById('checkbox.Tag' + i).checked) {
-      selected.tags[gTags[i]] = true;
-      selected.num++;
+    if (document.getElementById('checkbox.Tag' + i).value == filter_values[1]) {
+      selected.intags[gTags[i]] = true;
+      selected.innum++;
+    } else if (document.getElementById('checkbox.Tag' + i).value == filter_values[2]) {
+      selected.extags[gTags[i]] = true;
     }
-  }
-
-  // The 'unsolved' tag is in the UI only, it's not data that's recorded in
-  // stateserver.
-  selected.unsolved = document.getElementById('unsolved').checked;
-  if (selected.unsolved) {
-    selected.num++;
   }
 
   return selected;
@@ -71,19 +68,15 @@ var TagsMatch = function(selected, taglist) {
   var num_tags_match = 0;
   var unsolved = true;
   for (var i = 0; i < tags.length; i++) {
-    if (selected.tags[tags[i]]) {
+    if (selected.intags[tags[i]]) {
       num_tags_match++;
     }
-    if (tags[i] == 'solved') {
-      unsolved = false;
+    if (selected.extags[tags[i]]) {
+      return false;
     }
   }
 
-  if (selected.unsolved && unsolved) {
-    num_tags_match++;
-  }
-
-  return num_tags_match == selected.num;
+  return num_tags_match == selected.innum;
 };
 
 var ResetTags = function() {
@@ -146,6 +139,23 @@ var MakeTagSelector = function(parent, filter_tags) {
   td = document.createElement('td');
   td.style.verticalAlign = 'top';
 
+  var tristate = function(control) {
+    console.log(control);
+    switch (control.value.charAt(0)) {
+      case filter_values[0]:
+        control.value = filter_values[1];
+        break;
+      case filter_values[1]:
+        control.value = filter_values[2];
+        break;
+      case filter_values[2]:
+        control.value = filter_values[0];
+        break;
+      default:
+    }
+    filter_tags();
+  }
+
   var num_checkboxes_added = 0;
   var AddTagCheckbox = function(parent, tag, id, value, count) {
     var label = document.createElement('label');
@@ -157,12 +167,13 @@ var MakeTagSelector = function(parent, filter_tags) {
       label.appendChild(s);
     }
     var input = document.createElement('input');
-    input.type = 'checkbox';
-    input.onchange = filter_tags;
+    input.type = 'button';
+    input.onclick = function () {
+      tristate(this);
+    };
     input.id = id;
-    if (value != null) {
-      input.value = value;
-    }
+    input.value = value;
+
     label.style.paddingRight = '0.5em';
     label.appendChild(input);
     parent.appendChild(label);
@@ -179,15 +190,12 @@ var MakeTagSelector = function(parent, filter_tags) {
     var count = gTagCounts[tag];
     var id = 'checkbox.Tag' + i;
 
-    AddTagCheckbox(td, tag, id, i, count);
+    AddTagCheckbox(td, tag, id, filter_values[0], count);
 
     //if (i % 8 == 7) {
     //  td.appendChild(document.createElement('br'));
     //}
   }
-
-  AddTagCheckbox(td, 'INVERT', 'invert', null, null);
-  AddTagCheckbox(td, 'UNSOLVED', 'unsolved', null, null);
 
   tr.appendChild(td);
   table.appendChild(tr);

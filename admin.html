@@ -71,8 +71,9 @@ span.tooltip {
 <script src="tags.js"></script>
 <script src="who-data.js"></script>
 <script src="notifier.js"></script>
+<script src="googleaccess.js"></script>
 <script type="text/javascript" src="discord.11.4.2.min.js"></script>
-<script src="czar-nogoogle.js"></script>
+<script src="czar-admin.js"></script>
 
 </head>
 
@@ -108,6 +109,10 @@ span.tooltip {
 </div>
 <br clear=left>
 
+<form id=create name=create style="margin-bottom: 10">
+<input type=text name=label size=30 style='font-weight: bold'>
+</form>
+
 <div id=tags></div>
 <hr>
 
@@ -124,7 +129,7 @@ span.tooltip {
 
 <!-- documentation goes here. --->
 
-<!-- <a href="mobile.html">Go to Czar for Mobile</a> |  -->
+<!-- <a href="mobile.html">Go to Czar for Mobile</a> | -->
 <span id="showfaq" 
       style="cursor: pointer; color: blue; text-decoration: underline; display: inline;" 
       onclick="document.getElementById('faq').style.display='inline';

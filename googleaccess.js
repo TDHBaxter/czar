@@ -155,7 +155,7 @@ var startGoogleAccess = function(config) {
         console.log("googleaccess: gapi.client.init() ...");
         gapi.client.init({
           clientId: config.gapi_client_id,
-          scope: "profile email https://www.googleapis.com/auth/drive",
+          scope: "https://www.googleapis.com/auth/drive",
           discoveryDocs: [
             "https://www.googleapis.com/discovery/v1/apis/drive/v3/rest",
           ],
@@ -279,20 +279,20 @@ var startGoogleAccess = function(config) {
 
       if (config.template_doc_id) {
         console.log("googleaccess: gapi.client.drive.files.copy()");
-        gapi.client.drive.files.copy({
+        return(gapi.client.drive.files.copy({
           fileId: config.template_doc_id,
           name: title,
           fields: "id,webViewLink",
           parents: config.doc_folder_id ? [config.doc_folder_id] : null,
-        }).then(function (r) { callback(r.result.id, r.result.webViewLink); });
+        }).then(function (r) { return(callback(r.result.id, r.result.webViewLink)); }));
       } else {
         console.log("googleaccess: gapi.client.drive.files.create()");
-        gapi.client.drive.files.create({
+        return(gapi.client.drive.files.create({
           name: title,
           mimeType: "application/vnd.google-apps.spreadsheet",
           fields: "id,webViewLink",
           parents: config.doc_folder_id ? [config.doc_folder_id] : null,
-        }).then(function (r) { callback(r.result.id, r.result.webViewLink); });
+        }).then(function (r) { return(callback(r.result.id, r.result.webViewLink)); }));
       }
     },
 

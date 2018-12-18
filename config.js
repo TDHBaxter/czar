@@ -1,13 +1,20 @@
 // See README.md for configuration directions.
 
-var localhost_config = {
-  stateserver_url: "http://localhost:8888/localhost",
-  gapi_client_id: "368612528023-s8093hetppbt833d5fr9cegmmvaon9gk.apps.googleusercontent.com",
-  doc_folder_id: "0B5i1K9hv1-e6VEc0QW9LTHhWVUU",  // "Czar Test Folder"
-  jobs_to_display: ["Puzzle Czar", "Comm Czar"],
-  hunt_url: "http://en.wikipedia.org/wiki/Puzzlehunt",
-  hunt_info: "LOCALHOST TEST",
-  team_url: "http://en.wikipedia.org/wiki/Team",
+
+// Configuration for Caltech
+var caltech_config = {
+  stateserver_url: "http://www.thomasdbaxter.com:8888",
+  gapi_client_id: "841845273733-tu2tq6lc2obenlgf777qlgcjfnr3ht04.apps.googleusercontent.com",
+  doc_folder_id: "1JkQk-D5J-HrMhZpm9opPQcNolCybCnbg",
+  template_doc_id: "1wHFTWclAJkM8iSnpTMAIu2KZBTdqdprTULVN0swtxMw",
+  jobs_to_display: ["Puzzle Czar"],
+  hunt_url: "https://caltechpuzzlehunt.org",
+  hunt_info: "Test Solutions Bees Ignore (YQJBV)",
+  team_url: "",
+  discord_guild_id: "503712330341941260",
+  discord_unsolved: "517577583420899338",
+  discord_solved: ["517577631080644619","517577663142035468"],
+  discord_deleted: "517578874993770526",
 };
 
 var czartest_config = {
@@ -94,4 +101,4 @@ var leftout17_config = {
 };
 
 // Modify this to use a different config.
-var config = leftout17_config
+var config = caltech_config
